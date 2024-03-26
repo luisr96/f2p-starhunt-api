@@ -5,19 +5,18 @@ import com.f2pstarhunt.stars.repository.StarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class StarService {
 
     private final StarRepository starRepository;
 
-    @Autowired
-    public StarService(StarRepository starRepository) {
-        this.starRepository = starRepository;
-    }
-
-    public List<Star> getAllStars() {
-        return starRepository.findAll();
+    public List<Star> getLiveStars() {
+        return starRepository.findLiveStarsSince(Instant.now());
     }
 }

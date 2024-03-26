@@ -25,6 +25,10 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
                 <configuration>
+                    <!-- Store parameter names in bytecode so Spring can use them for path variables. -->
+                    <!-- This setting sets the '-parameters' javac option -->
+                    <parameters>true</parameters>
+                    <!-- Use javac -release flag instead of -source and -target since it is more robust. -->
                     <release>21</release>
                 </configuration>
             </plugin>
