@@ -1,9 +1,12 @@
-package com.f2pstarhunt.stars.model;
+package com.f2pstarhunt.stars.model.db;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Instant;
+
+import com.f2pstarhunt.stars.model.shared.StarLocation;
+import com.f2pstarhunt.stars.model.shared.StarTier;
 
 import org.hibernate.annotations.JdbcType;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
@@ -16,7 +19,7 @@ import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 @Setter
 public class Star {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //TODO is this correct? shouldn't we use SEQUENCE, because we are using the SERIAL type?
     private Long id;
 
     /** World of the star. */
@@ -41,4 +44,12 @@ public class Star {
 
     /** Instant at which the star disappeared. */
     private Instant disappearedAt;
+
+    /** Status of the star. */
+    private StarStatus status;
+
+    /** Whether the star is 'active' for being mined. */
+    public boolean isActive() {
+        return visible && status == StarStatus.ALIVE;
+    }
 }

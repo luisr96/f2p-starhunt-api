@@ -1,5 +1,3 @@
--- TODO do we actually need this? can't Spring do this for us (by DDL generation)?
-
 DO $$ BEGIN
     CREATE TYPE star_tier AS ENUM (
         'SIZE_1',
@@ -49,16 +47,33 @@ EXCEPTION
     WHEN duplicate_object THEN null;
 END $$;
 
+DO $$ BEGIN
+    CREATE TYPE start_status AS ENUM (
+        'ALIVE',
+        'DEPLETED',
+        'DISINTEGRATED',
+        'EXPIRED'
+    );
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
 CREATE TABLE IF NOT EXISTS star (
     id SERIAL PRIMARY KEY,
-    world SMALLINT,
-    location star_location,
+    world SMALLINT NOT NULL,
+    location star_location NOT NULL,
     tier start_tier,
     discovered_by VARCHAR(32) DEFAULT NULL,
-    detected_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    detected_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     disappeared_at TIMESTAMP WITH TIME ZONE DEFAULT NULL,
-    visible BOOLEAN DEFUALT FALSE
+    visible BOOLEAN DEFAULT FALSE,
+    status star_status NOT NULL DEFAULT 'ALIVE',
+
+    CONSTRAINT tier_iff_alive CHECK ((tier == NULL) == (status <> 'ALIVE'))
 );
 
-CREATE INDEX IF NOT EXISTS index_star_discovered_at ON star USING btree (detected_at);
-CREATE INDEX IF NOT EXISTS index_star_disappeared_at ON star USING btree (disappeared_at);
+CREATE INDEX IF NOT EXISTS index_star_discovered_at ON star USING BTREE (detected_at);
+CREATE INDEX IF NOT EXISTS index_star_disappeared_at ON star USING BTREE (disappeared_at);
+CREATE INDEX IF NOT EXISTS index_star_world ON star USING HASH (world);
+CREATE INDEX IF NOT EXISTS index_star_location ON star USING HASH (location);
+CREATE INDEX IF NOT EXISTS index_star_active ON star USING BTREE (status, visible);

@@ -1,4 +1,4 @@
-package com.f2pstarhunt.stars.model;
+package com.f2pstarhunt.stars.model.shared;
 
 public enum StarLocation {
 

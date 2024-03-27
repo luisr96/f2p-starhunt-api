@@ -1,4 +1,4 @@
-package com.f2pstarhunt.stars.model;
+package com.f2pstarhunt.stars.model.shared;
 
 public enum StarTier {
 
@@ -16,5 +16,9 @@ public enum StarTier {
 
     public static StarTier bySize(int size) {
         return VALUES[size - 1];
+    }
+
+    public boolean isGreaterThan(StarTier otherTier) {
+        return this.ordinal() > otherTier.ordinal();
     }
 }
