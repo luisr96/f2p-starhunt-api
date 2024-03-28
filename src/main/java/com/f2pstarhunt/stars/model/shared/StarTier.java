@@ -1,5 +1,6 @@
 package com.f2pstarhunt.stars.model.shared;
 
+/** Size of a crashed star. */
 public enum StarTier {
 
     SIZE_1,

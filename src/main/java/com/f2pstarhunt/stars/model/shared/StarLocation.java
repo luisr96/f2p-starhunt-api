@@ -1,5 +1,8 @@
 package com.f2pstarhunt.stars.model.shared;
 
+/**
+ * Free-to-play landing locations.
+ */
 public enum StarLocation {
 
     WILDERNESS_RUNITE_MINE,

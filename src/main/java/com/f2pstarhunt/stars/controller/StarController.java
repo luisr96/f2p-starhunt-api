@@ -22,6 +22,9 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Endpoints for clients such as a RuneLite plugin, Discord bot or website.
+ */
 @RestController
 @RequestMapping("/stars")
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
@@ -56,7 +59,7 @@ public class StarController {
     }
 
     /**
-     * Updates the star size
+     * Updates the star size.
      * @param id the id of the star
      * @param size the new size
      */
@@ -69,7 +72,7 @@ public class StarController {
     }
 
     /**
-     * Updates the star size
+     * Updates the star size.
      * @param world the world of the star
      * @param location the location of the star
      * @param size the new size
@@ -82,6 +85,10 @@ public class StarController {
         return updateResultToResponse(updateResult);
     }
 
+    /**
+     * Mark a star as disintegrated.
+     * @param id the id of the star
+     */
     @DeleteMapping("{id}/poof/")
     public void poofStar(@PathVariable long id) {
         //TODO rate-limit
@@ -89,6 +96,11 @@ public class StarController {
         starService.poof(id);
     }
 
+    /**
+     * Mark a star as disintegrated.
+     * @param world the star's world
+     * @param location the star's location
+     */
     @DeleteMapping("{world}/{location}/poof/")
     public void poofStar(@PathVariable int world, @PathVariable StarLocation location) {
         //TODO rate-limit
@@ -96,6 +108,10 @@ public class StarController {
         starService.poof(world, location);
     }
 
+    /**
+     * Mark a star as depleted.
+     * @param id the id of the star
+     */
     @DeleteMapping("{id}/deplete")
     public void depleteStar(@PathVariable long id) {
         //TODO rate-limit
@@ -103,6 +119,11 @@ public class StarController {
         starService.deplete(id);
     }
 
+    /**
+     * Mark a star as depleted.
+     * @param world the star's world
+     * @param location the star's location
+     */
     @DeleteMapping("{world}/{location}/deplete/")
     public void depleteStar(@PathVariable int world, @PathVariable StarLocation location) {
         //TODO rate-limit

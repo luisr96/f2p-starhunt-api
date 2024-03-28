@@ -19,7 +19,7 @@ import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 @Setter
 public class Star {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //TODO is this correct? shouldn't we use SEQUENCE, because we are using the SERIAL type?
+    /** Primary key of the star. Unique, 0 or NULL for un-persisted stars. */
     private Long id;
 
     /** World of the star. */

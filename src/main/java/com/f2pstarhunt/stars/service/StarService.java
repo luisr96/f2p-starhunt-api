@@ -21,11 +21,20 @@ public class StarService {
 
     private final StarRepository starRepository;
 
+    /**
+     * Get a list of live stars, ready for mining.
+     * @return the list of stars which are all visible and alive
+     */
     public List<StarDto> getLiveStars() {
         List<Star> stars = starRepository.findActiveStars();
         return stars.stream().map(StarService::toDto).toList();
     }
 
+    /**
+     * Send in a new star.
+     * @param dto the new star
+     * @return the database id of the persisted star
+     */
     @Transactional
     public long send(StarDto dto) {
         Star star = starRepository.findAliveStar(dto.world(), dto.location());
@@ -35,36 +44,75 @@ public class StarService {
         return star.getId();
     }
 
+    /**
+     * Update a star's size.
+     * @param id the id of the star
+     * @param tier the new size
+     * @return the update result
+     */
     @Transactional
     public StarUpdateResult update(long id, StarTier tier) {
         return update(starRepository.findActiveById(id), tier);
     }
 
+    /**
+     * Update a star's size.
+     * @param world the star's world
+     * @param location the star's location
+     * @param tier the new size
+     * @return the update result
+     */
     @Transactional
     public StarUpdateResult update(int world, StarLocation location, StarTier tier) {
         return update(starRepository.findActiveByLocation(world, location), tier);
     }
 
+    /**
+     * Mark a star as disintegrated.
+     * @param id the id of the star
+     * @return the delete result
+     */
     @Transactional
     public StarDeleteResult poof(long id) {
         return delete(starRepository.findActiveById(id), StarStatus.DISINTEGRATED);
     }
 
+    /**
+     * Mark a star as disintegrated.
+     * @param world the world of the star
+     * @param location the location of the star
+     * @return the delete result
+     */
     @Transactional
     public StarDeleteResult poof(int world, StarLocation location) {
         return delete(starRepository.findActiveByLocation(world, location), StarStatus.DISINTEGRATED);
     }
 
+    /**
+     * Mark a star as depleted.
+     * @param id the id of the star
+     * @return the delete result
+     */
     @Transactional
     public StarDeleteResult deplete(long id) {
         return delete(starRepository.findActiveById(id), StarStatus.DEPLETED);
     }
 
+    /**
+     * Mark a star as depleted..
+     * @param world the world of the star
+     * @param location the location of the star
+     * @return the delete result
+     */
     @Transactional
     public StarDeleteResult deplete(int world, StarLocation location) {
         return delete(starRepository.findActiveByLocation(world, location), StarStatus.DEPLETED);
     }
 
+    /**
+     * Call a star - make it publicly visible for mining.
+     * @param id the id of the star
+     */
     public void publish(long id) {
         Star star = starRepository.findAliveStar(id);
         if (star != null && !star.isVisible()) {
