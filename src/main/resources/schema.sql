@@ -1,3 +1,5 @@
+CREATE SCHEMA IF NOT EXISTS f2p-starhunt;
+
 DO $$ BEGIN
     CREATE TYPE star_tier AS ENUM (
         'SIZE_1',
