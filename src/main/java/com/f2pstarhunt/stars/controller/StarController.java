@@ -116,6 +116,8 @@ public class StarController {
      */
     @PatchMapping("/{id}/publish")
     public void publishStar(@PathVariable long id) {
+        //TODO rate-limit
+
         starService.publish(id);
     }
 

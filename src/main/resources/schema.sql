@@ -69,7 +69,8 @@ CREATE TABLE IF NOT EXISTS star (
     visible BOOLEAN DEFAULT FALSE,
     status star_status NOT NULL DEFAULT 'ALIVE',
 
-    CONSTRAINT tier_iff_alive CHECK ((tier == NULL) == (status <> 'ALIVE'))
+    CONSTRAINT star_tier_iff_alive CHECK ((tier = NULL) = (status <> 'ALIVE')),
+    CONSTRAINT star_disappeared_iff_dead CHECK ((disappeared_at <> NULL) = (status <> 'ALIVE'))
 );
 
 CREATE INDEX IF NOT EXISTS index_star_discovered_at ON star USING BTREE (detected_at);
