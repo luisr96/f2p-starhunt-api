@@ -178,7 +178,7 @@ public class StarService {
                 dto.location(),
                 StarTier.bySize(dto.tier()),
                 dto.discoveredBy(),
-                dto.detectedAt(),
+                dto.detectedAt() == null ? Instant.now() : dto.detectedAt(),
                 false,
                 null,
                 StarStatus.ALIVE
