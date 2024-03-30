@@ -96,6 +96,7 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>test</scope>
+            <!-- TODO actually specify the version of h2 here once we have integration tests. -->
         </dependency>
 
     </dependencies>

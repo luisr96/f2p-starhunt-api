@@ -32,8 +32,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class StarController {
 
-    // TODO check whether Spring's physical naming strategy and implicit naming strategy are correct.
-
     private final StarService starService;
 
     /**

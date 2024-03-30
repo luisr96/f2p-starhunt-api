@@ -21,7 +21,11 @@ public class Star {
 
     /** Primary key of the star. Unique, 0 or NULL for un-persisted stars. */
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "star_id_seq",
+            sequenceName = "star_id_seq",
+            allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "star_id_seq")
     private Long id;
 
     /** World of the star. */
