@@ -18,8 +18,10 @@ import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 @Getter
 @Setter
 public class Star {
-    @Id
+
     /** Primary key of the star. Unique, 0 or NULL for un-persisted stars. */
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     /** World of the star. */

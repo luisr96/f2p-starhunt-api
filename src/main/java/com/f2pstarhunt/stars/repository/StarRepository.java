@@ -15,19 +15,20 @@ public interface StarRepository extends JpaRepository<Star, Long> {
 
     @Query("""
            SELECT s FROM Star s
-           WHERE s.visible AND s.status = 'ALIVE'
+           WHERE s.visible AND s.status = com.f2pstarhunt.stars.model.db.StarStatus.ALIVE
            """)
     List<Star> findActiveStars();
 
     @Query("""
            SELECT s FROM Star s
-           WHERE s.id = :id AND s.status = 'ALIVE'
+           WHERE s.id = :id AND s.status = com.f2pstarhunt.stars.model.db.StarStatus.ALIVE
            """)
     Star findAliveStar(@Param("id") long id);
 
     @Query("""
            SELECT s FROM Star s
-           WHERE s.world = :world AND s.location = :location AND s.status = 'ALIVE'
+           WHERE s.world = :world AND s.location = :location
+           AND s.status = com.f2pstarhunt.stars.model.db.StarStatus.ALIVE
            """)
     Star findAliveStar(
             @Param("world") int world,
@@ -35,14 +36,14 @@ public interface StarRepository extends JpaRepository<Star, Long> {
 
     @Query("""
            SELECT s FROM Star s
-           WHERE s.status = 'ALIVE' AND s.visible
+           WHERE s.status = com.f2pstarhunt.stars.model.db.StarStatus.ALIVE AND s.visible
            AND s.id = :id 
            """)
     Star findActiveById(@Param("id") long id);
 
     @Query("""
            SELECT s FROM Star s
-           WHERE s.status = 'ALIVE' AND s.visible
+           WHERE s.status = com.f2pstarhunt.stars.model.db.StarStatus.ALIVE AND s.visible
            AND s.world = :world AND s.location = :location
            """)
     Star findActiveByLocation(
