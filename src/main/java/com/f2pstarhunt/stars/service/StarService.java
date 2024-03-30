@@ -164,7 +164,7 @@ public class StarService {
     private static boolean isDeletedStatus(StarStatus status) {
         return switch (status) {
             case DEPLETED, DISINTEGRATED -> true;
-            default -> false;
+            case null, default -> false;
         };
     }
 

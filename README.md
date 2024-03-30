@@ -34,7 +34,12 @@ services:
 docker compose up -d
 ```
 
-2. Run the back-end.
+2. Initialise the database.
+
+Connect to the database and execute the script `db-scripts/setup.sql`.
+(only needed once).
+
+3. Run the back-end.
 - Install the back-end java dependencies:
 ```sh
 mvnw clean install
@@ -45,4 +50,4 @@ com.f2pstarhunt.stars.StarsApplication.
 - Execute the run configuration.
 - Profit!!
 
-3. To shut down the database, run `docker compose down`.
+4. To shut down the database, run `docker compose down`.

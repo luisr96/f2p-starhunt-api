@@ -1,7 +1,9 @@
+-- Execute this script in a PostgreSQL script interpreter such as psql or DBeaver.
+
 CREATE SCHEMA IF NOT EXISTS f2p_starhunt;
 
 DO $$ BEGIN
-    CREATE TYPE f2p_starhunt.star_tier AS ENUM (
+    CREATE TYPE f2p_starhunt.startier AS ENUM (
         'SIZE_1',
         'SIZE_2',
         'SIZE_3',
@@ -17,7 +19,7 @@ EXCEPTION
 END$$;
 
 DO $$ BEGIN
-    CREATE TYPE f2p_starhunt.star_location AS ENUM (
+    CREATE TYPE f2p_starhunt.starlocation AS ENUM (
         'WILDERNESS_RUNITE_MINE',
         'WILDERNESS_CENTRE_MINE',
         'WILDERNESS_SOUTH_WEST_MINE',
@@ -50,7 +52,7 @@ EXCEPTION
 END $$;
 
 DO $$ BEGIN
-    CREATE TYPE f2p_starhunt.star_status AS ENUM (
+    CREATE TYPE f2p_starhunt.starstatus AS ENUM (
         'ALIVE',
         'DEPLETED',
         'DISINTEGRATED',
@@ -63,13 +65,13 @@ END $$;
 CREATE TABLE IF NOT EXISTS f2p_starhunt.star (
     id SERIAL PRIMARY KEY,
     world SMALLINT NOT NULL,
-    location f2p_starhunt.star_location NOT NULL,
-    tier f2p_starhunt.star_tier,
+    location f2p_starhunt.starlocation NOT NULL,
+    tier f2p_starhunt.startier,
     discovered_by VARCHAR(32) DEFAULT NULL,
     detected_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     disappeared_at TIMESTAMP WITH TIME ZONE DEFAULT NULL,
     visible BOOLEAN DEFAULT FALSE,
-    status f2p_starhunt.star_status NOT NULL DEFAULT 'ALIVE',
+    status f2p_starhunt.starstatus NOT NULL DEFAULT 'ALIVE',
 
     CONSTRAINT star_tier_iff_alive CHECK ((tier = NULL) = (status <> 'ALIVE')),
     CONSTRAINT star_disappeared_iff_dead CHECK ((disappeared_at <> NULL) = (status <> 'ALIVE'))
