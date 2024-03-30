@@ -50,11 +50,11 @@ public class StarController {
      * @param star the star
      * @return the id of the star
      */
-    @PostMapping("/send")
+    @PostMapping
     public long sendStar(@RequestBody StarDto star) {
         //TODO rate-limit
 
-        log.info("Received star: " + star);
+        log.info("Received star: {}", star);
 
         return starService.send(star);
     }
@@ -64,8 +64,8 @@ public class StarController {
      * @param id the id of the star
      * @param size the new size
      */
-    @PatchMapping("/{id}/update/{size}")
-    public ResponseEntity<Void> updateStar(@PathVariable long id, @PathVariable int size) {
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> updateStar(@PathVariable long id, @RequestBody int size) {
         //TODO rate-limit
 
         StarUpdateResult updateResult = starService.update(id, StarTier.bySize(size));
@@ -78,8 +78,8 @@ public class StarController {
      * @param location the location of the star
      * @param size the new size
      */
-    @PatchMapping("/{world}/{location}/update/{size}")
-    public ResponseEntity<Void> updateStar(@PathVariable int world, @PathVariable StarLocation location, @PathVariable int size) {
+    @PatchMapping("/{world}/{location}")
+    public ResponseEntity<Void> updateStar(@PathVariable int world, @PathVariable StarLocation location, @RequestBody int size) {
         //TODO rate-limit
 
         StarUpdateResult updateResult = starService.update(world, location, StarTier.bySize(size));

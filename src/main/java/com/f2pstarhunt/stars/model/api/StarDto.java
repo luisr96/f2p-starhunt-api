@@ -19,7 +19,7 @@ public record StarDto(
         Long id,
         int world,
         StarLocation location,
-        StarTier tier,
+        int tier,
         String discoveredBy,
         Instant detectedAt) {
 

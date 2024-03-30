@@ -48,6 +48,7 @@ public class Star {
     private Instant disappearedAt;
 
     /** Status of the star. */
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     private StarStatus status;
 
     /** Whether the star is 'active' for being mined. */

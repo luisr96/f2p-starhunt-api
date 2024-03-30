@@ -19,6 +19,10 @@ public enum StarTier {
         return VALUES[size - 1];
     }
 
+    public int size() {
+        return ordinal() + 1;
+    }
+
     public boolean isGreaterThan(StarTier otherTier) {
         return this.ordinal() > otherTier.ordinal();
     }

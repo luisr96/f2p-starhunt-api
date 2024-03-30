@@ -1,7 +1,7 @@
-CREATE SCHEMA IF NOT EXISTS f2p-starhunt;
+CREATE SCHEMA IF NOT EXISTS f2p_starhunt;
 
 DO $$ BEGIN
-    CREATE TYPE star_tier AS ENUM (
+    CREATE TYPE f2p_starhunt.star_tier AS ENUM (
         'SIZE_1',
         'SIZE_2',
         'SIZE_3',
@@ -14,10 +14,10 @@ DO $$ BEGIN
     );
 EXCEPTION
     WHEN duplicate_object THEN null;
-END $$;
+END$$;
 
 DO $$ BEGIN
-    CREATE TYPE star_location AS ENUM (
+    CREATE TYPE f2p_starhunt.star_location AS ENUM (
         'WILDERNESS_RUNITE_MINE',
         'WILDERNESS_CENTRE_MINE',
         'WILDERNESS_SOUTH_WEST_MINE',
@@ -50,7 +50,7 @@ EXCEPTION
 END $$;
 
 DO $$ BEGIN
-    CREATE TYPE start_status AS ENUM (
+    CREATE TYPE f2p_starhunt.star_status AS ENUM (
         'ALIVE',
         'DEPLETED',
         'DISINTEGRATED',
@@ -60,23 +60,24 @@ EXCEPTION
     WHEN duplicate_object THEN null;
 END $$;
 
-CREATE TABLE IF NOT EXISTS star (
+CREATE TABLE IF NOT EXISTS f2p_starhunt.star (
     id SERIAL PRIMARY KEY,
     world SMALLINT NOT NULL,
-    location star_location NOT NULL,
-    tier start_tier,
+    location f2p_starhunt.star_location NOT NULL,
+    tier f2p_starhunt.star_tier,
     discovered_by VARCHAR(32) DEFAULT NULL,
     detected_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     disappeared_at TIMESTAMP WITH TIME ZONE DEFAULT NULL,
     visible BOOLEAN DEFAULT FALSE,
-    status star_status NOT NULL DEFAULT 'ALIVE',
+    status f2p_starhunt.star_status NOT NULL DEFAULT 'ALIVE',
 
     CONSTRAINT star_tier_iff_alive CHECK ((tier = NULL) = (status <> 'ALIVE')),
     CONSTRAINT star_disappeared_iff_dead CHECK ((disappeared_at <> NULL) = (status <> 'ALIVE'))
 );
 
-CREATE INDEX IF NOT EXISTS index_star_discovered_at ON star USING BTREE (detected_at);
-CREATE INDEX IF NOT EXISTS index_star_disappeared_at ON star USING BTREE (disappeared_at);
-CREATE INDEX IF NOT EXISTS index_star_world ON star USING HASH (world);
-CREATE INDEX IF NOT EXISTS index_star_location ON star USING HASH (location);
-CREATE INDEX IF NOT EXISTS index_star_active ON star USING BTREE (status, visible);
+CREATE INDEX IF NOT EXISTS index_star_discovered_at ON f2p_starhunt.star USING BTREE (detected_at);
+CREATE INDEX IF NOT EXISTS index_star_disappeared_at ON f2p_starhunt.star USING BTREE (disappeared_at);
+CREATE INDEX IF NOT EXISTS index_star_world ON f2p_starhunt.star USING HASH (world);
+CREATE INDEX IF NOT EXISTS index_star_location ON f2p_starhunt.star USING HASH (location);
+CREATE INDEX IF NOT EXISTS index_star_active ON f2p_starhunt.star USING BTREE (status, visible);
+

@@ -169,14 +169,14 @@ public class StarService {
     }
 
     private static Star newStar(StarDto dto) {
-        if (dto.tier() == null)
-            throw new IllegalArgumentException("new star without tier: " + dto);
+        if (!(1 <= dto.tier() && dto.tier() <= 9))
+            throw new IllegalArgumentException("new star improper tier: " + dto);
 
         return new Star(
                 null,
                 dto.world(),
                 dto.location(),
-                dto.tier(),
+                StarTier.bySize(dto.tier()),
                 dto.discoveredBy(),
                 dto.detectedAt(),
                 false,
@@ -190,7 +190,7 @@ public class StarService {
                 star.getId(),
                 star.getWorld(),
                 star.getLocation(),
-                star.getTier(),
+                star.getTier().size(),
                 star.getDiscoveredBy(),
                 star.getDetectedAt()
         );
