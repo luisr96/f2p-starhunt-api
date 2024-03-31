@@ -25,6 +25,10 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
                 <configuration>
+                    <!-- Store parameter names in bytecode so Spring can use them for path variables. -->
+                    <!-- This setting sets the '-parameters' javac option -->
+                    <parameters>true</parameters>
+                    <!-- Use javac -release flag instead of -source and -target since it is more robust. -->
                     <release>21</release>
                 </configuration>
             </plugin>
@@ -67,18 +71,21 @@
 <!--            <scope>runtime</scope>-->
 <!--            <optional>true</optional>-->
 <!--        </dependency>-->
+        <!-- Some helpful compile-time code generation -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.32</version>
+            <scope>provided</scope>
         </dependency>
+        <!-- Database driver -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.7.2</version>
+            <version>42.7.3</version>
         </dependency>
 
-        <!-- Test dependencies -->
+        <!-- Test dependencies (we don't have tests yet) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -88,7 +95,8 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>runtime</scope>
+            <scope>test</scope>
+            <!-- TODO actually specify the version of h2 here once we have integration tests. -->
         </dependency>
 
     </dependencies>
