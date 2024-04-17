@@ -34,10 +34,6 @@ public class StarController {
 
     private final StarService starService;
 
-    /**
-     * Get all live stars.
-     * @return the live stars
-     */
     @GetMapping
     public List<StarDto> getLiveStars() {
         return starService.getLiveStars();

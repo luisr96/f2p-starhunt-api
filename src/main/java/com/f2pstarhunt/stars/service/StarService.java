@@ -26,7 +26,7 @@ public class StarService {
      * @return the list of stars which are all visible and alive
      */
     public List<StarDto> getLiveStars() {
-        List<Star> stars = starRepository.findActiveStars();
+        List<Star> stars = starRepository.findByVisibleTrueAndStatus(StarStatus.ALIVE);
         return stars.stream().map(StarService::toDto).toList();
     }
 

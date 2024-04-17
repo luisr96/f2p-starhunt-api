@@ -8,9 +8,6 @@ import java.time.Instant;
 import com.f2pstarhunt.stars.model.shared.StarLocation;
 import com.f2pstarhunt.stars.model.shared.StarTier;
 
-import org.hibernate.annotations.JdbcType;
-import org.hibernate.dialect.PostgreSQLEnumJdbcType;
-
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,22 +18,18 @@ public class Star {
 
     /** Primary key of the star. Unique, 0 or NULL for un-persisted stars. */
     @Id
-    @SequenceGenerator(
-            name = "star_id_seq",
-            sequenceName = "star_id_seq",
-            allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "star_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     /** World of the star. */
     private int world;
 
     /** Location of the star. */
-    @JdbcType(PostgreSQLEnumJdbcType.class)
+    @Enumerated(EnumType.STRING)
     private StarLocation location;
 
     /** Size of the star. */
-    @JdbcType(PostgreSQLEnumJdbcType.class)
+    @Enumerated(EnumType.STRING)
     private StarTier tier;
 
     /** Username of the scout. */
@@ -52,7 +45,7 @@ public class Star {
     private Instant disappearedAt;
 
     /** Status of the star. */
-    @JdbcType(PostgreSQLEnumJdbcType.class)
+    @Enumerated(EnumType.STRING)
     private StarStatus status;
 
     /** Whether the star is 'active' for being mined. */
