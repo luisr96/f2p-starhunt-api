@@ -2,8 +2,10 @@ package com.f2pstarhunt.stars;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
+@EnableScheduling
 public class StarsApplication {
 
     public static void main(String[] args) {

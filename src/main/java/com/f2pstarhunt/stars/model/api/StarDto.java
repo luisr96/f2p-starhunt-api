@@ -4,7 +4,6 @@ import java.time.Instant;
 import java.util.Objects;
 
 import com.f2pstarhunt.stars.model.shared.StarLocation;
-import com.f2pstarhunt.stars.model.shared.StarTier;
 
 /**
  * Star data transfer object.

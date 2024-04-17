@@ -1,4 +1,4 @@
-package com.f2pstarhunt.stars.starminers;
+package com.f2pstarhunt.stars.thirdparty;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
@@ -81,7 +81,7 @@ public class WorldClient {
         } while (b != 0);
 
         int endPos = buffer.position();
-        
+
         return new String(buffer.slice(startPos, endPos - startPos).array(), StandardCharsets.ISO_8859_1);
     }
 }
