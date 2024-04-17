@@ -39,6 +39,11 @@ public class StarController {
         return starService.getLiveStars();
     }
 
+    @GetMapping("/private")
+    public List<StarDto> getAliveStars() {
+        return starService.getAliveStars();
+    }
+
     /**
      * Receive star information.
      * @param star the star

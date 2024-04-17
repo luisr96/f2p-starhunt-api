@@ -31,6 +31,15 @@ public class StarService {
     }
 
     /**
+     * Get the stars which are alive, regardless of visibility status.
+     * @return the list of stars which are all alive
+     */
+    public List<StarDto> getAliveStars() {
+        List<Star> stars = starRepository.findByVisibleTrueAndStatus(StarStatus.ALIVE);
+        return stars.stream().map(StarService::toDto).toList();
+    }
+
+    /**
      * Send in a new star.
      * @param dto the new star
      * @return the database id of the persisted star

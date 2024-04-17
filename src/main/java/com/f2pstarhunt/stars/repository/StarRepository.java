@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 public interface StarRepository extends JpaRepository<Star, Long> {
 
     List<Star> findByVisibleTrueAndStatus(StarStatus status);
+    List<Star> findByStatus(StarStatus status);
 
     @Query("""
            SELECT s FROM Star s
