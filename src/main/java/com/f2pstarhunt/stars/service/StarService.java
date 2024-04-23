@@ -22,11 +22,13 @@ public class StarService {
     private final StarRepository starRepository;
 
     /**
-     * Get a list of live stars, ready for mining.
-     * @return the list of stars which are all visible and alive
+     * Get the stars which are alive.
+     * @param includeBackups whether to include backup stars
+     * @return the list of stars which are all alive
      */
-    public List<StarDto> getLiveStars() {
-        List<Star> stars = starRepository.findByVisibleTrueAndStatus(StarStatus.ALIVE);
+    public List<StarDto> getAliveStars(boolean includeBackups) {
+        // Backup stars have visibility false, active stars have visibility true; hence we invert the boolean.
+        List<Star> stars = starRepository.findAliveStarsWithVisibilityAtLeast(!includeBackups);
         return stars.stream().map(StarService::toDto).toList();
     }
 
