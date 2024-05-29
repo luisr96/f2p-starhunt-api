@@ -41,7 +41,7 @@ public class StarController {
             @RequestHeader(name = RANK_HEADER, required = false) String rank,
             @RequestParam(name = "status", required = false) String activeOrBackup) {
         boolean includeBackups = "backup".equalsIgnoreCase(activeOrBackup);
-        if (rank == null) {
+        if (includeBackups && rank == null) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN.value()).body("You do not have permission to access this resource.");
         }
         return ResponseEntity.ok(starService.getAliveStars(includeBackups));
